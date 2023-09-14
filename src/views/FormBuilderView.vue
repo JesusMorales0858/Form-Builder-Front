@@ -1,11 +1,14 @@
 <template>
   <div id="contenedor-padre">
+    <div class="col p-2 ">
+                <h6 class="text-center h5">Nuevo Formulario</h6>
+            </div>
     <div>
       <!-- Formulario para agregar campos al formulario -->
-      <div class="row g-3">
+      <div class="row g-3 p-3">
         <div class="col-auto"><!-- Grupo tipo de campo -->
           <label for="field-type" style="margin-right: 10px;">Tipo de Campo:</label>
-          <select id="field-type">
+          <select id="field-type" class="form-control">
             <option value="text">Texto</option>
             <option value="textarea">Área de Texto</option>
             <option value="select">Select</option>
@@ -20,25 +23,25 @@
         </div>
         <div class="col-auto" id="etiqueta-group"><!--Grupo etiqueta-->
           <label for="field-label" style="margin-right: 10px;" id="etiqueta-group-label">Etiqueta del Campo:</label>
-          <input type="text" id="field-label" v-model="label">
-        </div>
-        <div class="col-auto" id="requerido-group"><!-- Grupo requerido -->
-          <label for="field-required" style="margin-right: 10px;">Requerido:</label>
-          <input type="checkbox" id="field-required" v-model="required">
+          <input type="text" id="field-label" v-model="label" class="form-control">
         </div>
         <div class="col-auto" id="placeholder-group"><!-- Grupo placeholder -->
           <label for="field-placeholder" style="margin-right: 10px;">Placeholder:</label>
-          <input type="text" id="field-placeholder" v-model="placeholder">
+          <input type="text" id="field-placeholder" v-model="placeholder" class="form-control">
         </div>
+        <div class="col-auto form-check form-switch" id="requerido-group">
+          <!-- Grupo requerido -->
+          <div class="position-relative d-flex align-items-center justify-content-center" style="height: 85px;">
+            <input type="checkbox" id="field-required" v-model="required" class="form-check-input p-2" title="Define si es el campo es obligatorio">
+            <label for="field-required" style="margin-right: 10px;" class="form-check-label p-2" title="Define si es el campo es obligatorio">Requerido</label>
+          </div>
+        </div>
+
       </div>
-      <!-- Submit -->
-      <br>
-      <!-- Grupo etiqueta para grupos de campos
-    <input type="text" id="group-name" placeholder="Nombre del grupo">
-    <button onclick="addGroup()">Add group</button>
-    -->
-      <button @click="addField">Agregar campo</button>
+
     </div>
+    <button @click="addField" class="btn btn-warning" title="Agregar nuevo campo">Agregar campo</button>
+    <br>
     <br>
     <!-- Los campos se agregarán aquí -->
     <div id="form-builder">
@@ -83,7 +86,8 @@
     </div>
 
     <br>
-    <button @click="showFormData">Enviar a consola</button><!--Envia las propiedades de los campos a la consola-->
+    <button @click="showFormData" class="btn btn-primary"
+      title="Guardar formulario">Guardar</button><!--Envia las propiedades de los campos a la consola-->
   </div>
 </template>
 <script>
@@ -222,8 +226,8 @@ export default {
 </script>
 <style scoped>
 #form-builder {
-  min-height: 280px;
-  border: 2px dashed #ccc;
+  min-height: 250px;
+  border: 2px dashed #464646;
   padding: 40px;
 }
 

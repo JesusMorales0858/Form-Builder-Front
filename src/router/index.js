@@ -27,6 +27,12 @@ const routes = [{
         name: 'formularios',
         component: () =>
             import ('../views/FormulariosView')
+    },
+    {
+        path: '/grilla/:idConfigForm',
+        name: 'grilla  ',
+        component: () =>
+            import ('../views/ManagerGrillaView')
     }
 ]
 
