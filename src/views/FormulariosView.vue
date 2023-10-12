@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     fetch() {
-      let result = axios.get("http://localhost:5045/api/ConfigForm/ListaFormulariosCRUD")
+      let result = axios.get("http://localhost:5045/api/ConfigForm/ListaFormulariosCRUD") 
         .then((respuesta) => {
           this.ListaFormularios = respuesta.data.lista
         })
