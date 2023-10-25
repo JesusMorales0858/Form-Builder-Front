@@ -12,14 +12,14 @@
           <div v-for="campos of dafield" :key="campos.id_Field">
             <label :for="campos.nombre">{{ campos.etiqueta }}</label>
             <input :type="campos.tipo" :placeholder="campos.marcador" :class="campos.clase" :name="campos.nombre"
-              :required="campos.requerido">
+              :required="campos.requerido" :identificador="campos.id_Field">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-auto">
           <div class="col  p-3 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
           </div>
         </div>
         <div class="col-auto">
@@ -29,6 +29,13 @@
         </div>
       </div>
     </form>
+    <!-- Spinner: lo mostramos si loading es true -->
+    <div class="d-flex justify-content-center" v-if="loading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -38,27 +45,34 @@ import axios from "axios";
 export default {
   name: 'ManagerModulesView',
   data: function () {
-    return { daform: [], dafield: [] }
+    return { daform: [], dafield: [], loading: false }
   },
   created() {
     this.fetch();
   },
   methods: {
     fetch() {
+
+      //inicializa el spinner
+      this.loading = true;
+
+
       const idConfigForm = this.$route.params.idConfigForm;
 
       axios.get(`http://localhost:5045/api/ConfigForm/MostrarFormularioCompleto/${idConfigForm}`)
         .then((respuesta) => {
           this.daform = respuesta.data;
           this.dafield = respuesta.data.datosField;
-          console.log(respuesta.data);
         })
         .catch(err => {
           console.log(err);
+        }).finally(() => {
+          //finaliza el spinner
+          // Ocultamos el spinner luego de finalizar la solicitud
+          this.loading = false;
         });
     },
     obtenerValores() {
-      console.log("Va func");
 
       // Obtén una referencia al contenedor de campos dinámicos
       var contenedor = document.getElementById("ContenedorDeCampos");
@@ -67,15 +81,34 @@ export default {
       var campos = contenedor.querySelectorAll("input[type='text'], textarea, input[type='number']");
 
       // Crea un objeto para almacenar los valores
-      var valores = {};
+      var valores = [];
+
+      //recuperar valor del idConfigForm
+      var idConfigForm = this.$route.params.idConfigForm;
 
       // Recorre los campos y obtén sus valores
-      campos.forEach(function(campo) {
-        valores[campo.name] = campo.value;
-      });
+      campos.forEach(function (campo) {
+        valores.push({
+          id_ConfigForm: idConfigForm,  // Puedes ajustar este valor según tus necesidades
+          id_Field: campo.getAttribute("identificador"),  // Utiliza getAttribute para obtener el valor de key
+          valor: campo.value,
+        });
 
-      // Haz lo que quieras con los valores (por ejemplo, mostrarlos en la consola)
-      console.log(valores);
+      });
+      //enviar valores a la api
+      // Realiza una solicitud POST a la API para guardar los registros
+      axios.post('http://localhost:5045/api/ConfigForm/Respuestas/Guardar', valores)
+        .then((respuesta) => {
+
+          //redirigir a la grilla dinamica
+          this.$router.push(`/grilla/${idConfigForm}`);
+
+        })
+        .catch(err => {
+          console.log('Error al guardar los registros:', err);
+        });
+
+
     }
   }
 };
