@@ -6,11 +6,20 @@
           <h5 class="modal-title">Editar Fila</h5>
           <button type="button" class="btn-close" @click="cerrarModal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
+        <!--<div class="modal-body">
           <div v-for="campo of dafield" :key="campo.id_Field">
             <label :for="campo.nombre">{{ campo.etiqueta }}</label>
             <input :type="campo.tipo" :placeholder="campo.marcador" :class="campo.clase" :name="campo.nombre"
               :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
+          </div>
+        </div>-->
+        <div class="modal-body">
+          <div v-for="campo of dafield" :key="campo.id_Field">
+            <label :for="campo.nombre">{{ campo.etiqueta }}</label>
+            <select v-if="campo.tipo === 'select'" :name="campo.nombre" :class="campo.clase" :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
+              <option v-for="opcion in campo.opciones ? campo.opciones.split(',') : []" :value="opcion.trim()">{{ opcion.trim() }}</option>
+            </select>
+            <input v-else :type="campo.tipo" :placeholder="campo.marcador" :class="campo.clase" :name="campo.nombre" :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
           </div>
         </div>
         <div class="modal-footer">
