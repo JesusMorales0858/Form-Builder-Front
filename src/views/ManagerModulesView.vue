@@ -11,8 +11,13 @@
           </div>
           <div v-for="campos of dafield" :key="campos.id_Field">
             <label :for="campos.nombre">{{ campos.etiqueta }}</label>
-            <input :type="campos.tipo" :placeholder="campos.marcador" :class="campos.clase" :name="campos.nombre"
-              :required="campos.requerido" :identificador="campos.id_Field">
+            <!-- Si el tipo es "select", renderiza un select -->
+            <select v-if="campos.tipo === 'select'" :name="campos.nombre" :class="campos.clase" :required="campos.requerido" :identificador="campos.id_Field">
+  <option v-for="opcion in campos.opciones ? campos.opciones.split(',') : []" :value="opcion.trim()">{{ opcion.trim() }}</option>
+</select>
+
+            <!-- Si no, renderiza un input según el tipo -->
+            <input v-else :type="campos.tipo" :placeholder="campos.marcador" :class="campos.clase" :name="campos.nombre" :required="campos.requerido" :identificador="campos.id_Field">
           </div>
         </div>
       </div>
@@ -63,6 +68,7 @@ export default {
         .then((respuesta) => {
           this.daform = respuesta.data;
           this.dafield = respuesta.data.datosField;
+          console.log(this.dafield);
         })
         .catch(err => {
           console.log(err);
@@ -78,7 +84,7 @@ export default {
       var contenedor = document.getElementById("ContenedorDeCampos");
 
       // Encuentra todos los elementos de formulario dentro del contenedor
-      var campos = contenedor.querySelectorAll("input[type='text'], textarea, input[type='number']");
+      var campos = contenedor.querySelectorAll("input[type='text'], textarea, input[type='number'], select");
 
       // Crea un objeto para almacenar los valores
       var valores = [];
