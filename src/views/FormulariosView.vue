@@ -33,7 +33,7 @@
             <td class="nowrap">
               <div class="row">
                 <div class="col-auto">
-                  <button class="btn btn-warning mx-1" v-on:click="asd">Editar</button>
+                  <button class="btn btn-warning mx-1" v-on:click="asd" disabled>Editar</button>
                 </div>
                 <div class="col-auto">
                   <button class="btn btn-danger mx-1" v-on:click="eliminarform(Listaform.idConfigForm)">Eliminar</button>
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     fetch() {
-      let result = axios.get("http://localhost:5045/api/ConfigForm/ListaFormulariosCRUD") 
+      let result = axios.get("/api/ConfigForm/ListaFormulariosCRUD") 
         .then((respuesta) => {
           this.ListaFormularios = respuesta.data.lista
         })
@@ -72,7 +72,7 @@ export default {
       var enviar = {
         "IdConfigForm": idConfigForm
       }
-      axios.put(`http://localhost:5045/api/ConfigForm/EliminarModulo/${idConfigForm}`)
+      axios.put(`/api/ConfigForm/EliminarModulo/${idConfigForm}`)
         .then(datos => {
           console.log(datos);
           this.AlertEliminado();

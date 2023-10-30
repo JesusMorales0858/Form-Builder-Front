@@ -116,7 +116,7 @@ export default {
         fetch() {
             const idFormulario = this.$route.params.idConfigForm;
             this.idConfigForm = idFormulario;
-            let result = axios.get(`http://localhost:5045/api/ConfigForm/ListaRespuestas/${idFormulario}`)
+            let result = axios.get(`/api/ConfigForm/ListaRespuestas/${idFormulario}`)
                 .then((respuesta) => {
                     let data = []; //declarar la variable data
                     data = respuesta.data.lista; //signarle a data el array de objetos recibidos de la api
@@ -188,7 +188,7 @@ export default {
 
         eliminarFila(id_fila) {
             //solicitud a la api mediante axios
-            axios.put(`http://localhost:5045/api/ConfigForm/Respuestas/Eliminar/${id_fila}`, {
+            axios.put(`/api/ConfigForm/Respuestas/Eliminar/${id_fila}`, {
                 headers: {
                     //tipo de contenido enviado a la api
                     'Content-Type': 'application/json'

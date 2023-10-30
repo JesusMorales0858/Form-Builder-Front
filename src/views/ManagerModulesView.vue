@@ -64,7 +64,7 @@ export default {
 
       const idConfigForm = this.$route.params.idConfigForm;
 
-      axios.get(`http://localhost:5045/api/ConfigForm/MostrarFormularioCompleto/${idConfigForm}`)
+      axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${idConfigForm}`)
         .then((respuesta) => {
           this.daform = respuesta.data;
           this.dafield = respuesta.data.datosField;
@@ -103,7 +103,7 @@ export default {
       });
       //enviar valores a la api
       // Realiza una solicitud POST a la API para guardar los registros
-      axios.post('http://localhost:5045/api/ConfigForm/Respuestas/Guardar', valores)
+      axios.post('/api/ConfigForm/Respuestas/Guardar', valores)
         .then((respuesta) => {
 
           //redirigir a la grilla dinamica

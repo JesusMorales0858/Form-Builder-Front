@@ -3,8 +3,8 @@ import HomeView from '../views/HomeView.vue'
 //Importar demas vistas
 
 const routes = [{
-        path: '/',
-        name: 'home',
+        path: '/Inicio',
+        name: 'Inicio',
         component: HomeView
     },
     {
@@ -29,10 +29,22 @@ const routes = [{
             import ('../views/FormulariosView')
     },
     {
+        path: '/editForms/:id',
+        name: 'editForms',
+        component: () =>
+            import ('../views/EditForms')
+    },
+    {
         path: '/grilla/:idConfigForm',
         name: 'grilla  ',
         component: () =>
             import ('../views/ManagerGrillaView')
+    },
+    {
+        path: '/',
+        name: 'Acceder',
+        component: () =>
+            import ('../views/LoginView')
     }
 ]
 

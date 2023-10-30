@@ -76,7 +76,7 @@ export default {
       this.id_DeFila = this.fila[0];
 
       // Solicitud que trae los datos para construir el formulario
-      axios.get(`http://localhost:5045/api/ConfigForm/MostrarFormularioCompleto/${this.id_DelFormulario}`)
+      axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${this.id_DelFormulario}`)
         .then((estructuraDelFormulario) => {
           this.dafield = estructuraDelFormulario.data.datosField;
         })
@@ -89,7 +89,7 @@ export default {
         });
 
       // Solicitud que trae los datos de la fila seleccionada
-      axios.get(`http://localhost:5045/api/ConfigForm/ListaRespuestasIdentificadorFila/${this.id_DelFormulario}/${this.id_DeFila}`)
+      axios.get(`/api/ConfigForm/ListaRespuestasIdentificadorFila/${this.id_DelFormulario}/${this.id_DeFila}`)
         .then((DatosFila) => {
           this.datosDeLaFila = DatosFila.data.lista; // Asignar a datosDeLaFila
           this.filaEditadaPorNombre = {};
@@ -123,7 +123,7 @@ export default {
           }
         }
         axios
-          .post("http://localhost:5045/api/ConfigForm/Respuestas/Editar", ediciones)
+          .post("/api/ConfigForm/Respuestas/Editar", ediciones)
           .then((response) => {
             // Procesar la respuesta del servidor si es necesario
             this.cerrarModal();
