@@ -213,6 +213,7 @@ export default {
       let required = document.getElementById('field-required').checked;
       let placeholder = document.getElementById('field-placeholder').value;
       let options;
+      let opcionesCadena;
 
       const fieldId = this.fieldCounter;
 
@@ -222,10 +223,13 @@ export default {
         const selectOptions = prompt('Ingrese opciones del select (separadas por coma)');
         if (!selectOptions) return; // Si no hay opciones, no agregar el campo
         options = selectOptions.split(','); // Asignamos el valor a la variable
-        this.formFields.push({ id_Field: fieldId, nombre: label, label, type, required, placeholder, options });
-        placeholder = '';
+        opcionesCadena = selectOptions;
+        placeholder = "1";
+        this.formFields.push({ id_Field: fieldId, nombre: label, label, type, required, placeholder, options, opcionesCadena });
+        
       } else {
-        this.formFields.push({ id_Field: fieldId, nombre: label, label, type, required, placeholder });
+        opcionesCadena = "1";
+        this.formFields.push({ id_Field: fieldId, nombre: label, label, type, required, placeholder, opcionesCadena });
       }
 
       // Resetear formulario de crear campos
@@ -279,8 +283,8 @@ export default {
             etiqueta: field.label,
             tipo: field.type,
             requerido: field.required ? 1 : 0,
-            marcador: field.marcador,
-            opciones: field.options,
+            marcador: field.placeholder,
+            opciones: field.opcionesCadena,
             visible: 1,
             clase: 'form-control',
             estado: 1,
@@ -303,8 +307,8 @@ export default {
             etiqueta: field.label,
             tipo: field.type,
             requerido: field.required ? 1 : 0,
-            marcador: field.marcador,
-            opciones: field.options,
+            marcador: field.placeholder,
+            opciones: field.opcionesCadena,
             visible: 1,
             clase: 'form-control',
             estado: 1,
@@ -331,6 +335,7 @@ export default {
         } else if (error.request) {
           console.error('Error de red: No se recibió respuesta');
         } else {
+          this.$refs.staticBackdrop.hide();
           console.error('Error de configuración:', error.message);
         }
       });
