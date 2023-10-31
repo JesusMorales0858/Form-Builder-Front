@@ -72,7 +72,7 @@ export default {
       var enviar = {
         "IdConfigForm": idConfigForm
       }
-      axios.put(`/api/ConfigForm/EliminarModulo/${idConfigForm}`)
+      this.axios.put(`/api/ConfigForm/EliminarModulo/${idConfigForm}`)
         .then(datos => {
           console.log(datos);
           this.AlertEliminado();

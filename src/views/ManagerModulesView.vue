@@ -103,7 +103,7 @@ export default {
       });
       //enviar valores a la api
       // Realiza una solicitud POST a la API para guardar los registros
-      axios.post('/api/ConfigForm/Respuestas/Guardar', valores)
+      this.axios.post('/api/ConfigForm/Respuestas/Guardar', valores)
         .then((respuesta) => {
 
           //redirigir a la grilla dinamica

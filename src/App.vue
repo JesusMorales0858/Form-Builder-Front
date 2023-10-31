@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar bg-dark navbar-dark">
+  <nav class="navbar bg-dark navbar-dark" v-if="mostarBarraNavegacion">
     <div class="container-fluid">
       <div class="navbar-brand">
+        <div class="row">
+        <div class="col-auto">
         <!--icono user-->
         <svg v-if="$store.state.isAuthenticated" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle"
           viewBox="0 0 16 16">
@@ -11,7 +13,13 @@
         </svg>
         <!--  ********************************* -->
         {{ $store.state.usuario }}
+        </div>
+        <div class="col-auto">
+        <!-- boton de cerrar sesion -->
+      <router-link to="#!" v-if="$store.state.isAuthenticated" @click="$store.commit('logout')" class="btn btn-secondary"> Cerrar Sesion </router-link>
+        </div>
       </div>
+    </div>
       <button v-if="$store.state.isAuthenticated" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" v-on:click="fetch">
         <!-- boton activador !!-->
         <span class="navbar-toggler-icon"></span>
@@ -44,14 +52,21 @@ import axios from "axios";
 
 export default {
   name: "App",
-  data: function () { return { formularios: [] } },
+  data: function () { return { 
+    formularios: [],
+    mostarBarraNavegacion: true } },
+    watch:{
+      '$route'(to, from){
+        this.mostarBarraNavegacion = to.name != 'Acceder';
+      }
+    },
   created() {
     this.fetch();
   },
   methods: {
     
     fetch() {
-      let result = axios.get("localhost:5045/api/ConfigForm/ListaFormulariosMenu")
+      this.axios.get("/api/ConfigForm/ListaFormulariosMenu")
         .then((respuesta) => {
           this.formularios = respuesta.data.lista
         })

@@ -317,7 +317,7 @@ export default {
       const jsonFinalForm = JSON.stringify(finalForm);
       console.log(jsonFinalForm);
 
-      axios.post("/api/ConfigForm/GuardarFormularioCreado", jsonFinalForm,{
+      this.axios.post("/api/ConfigForm/GuardarFormularioCreado", jsonFinalForm,{
           headers : {
           'Content-Type':'application/json'
         }
