@@ -45,7 +45,7 @@
       </div>
       <!-- Register buttons -->
       <div class="text-center">
-        <p>No tienes una cuenta? <a href="#!">Registrate</a></p>
+        <p>No tienes una cuenta? <a href="/registro">Registrate</a></p>
       </div>
     </form>
   </div>

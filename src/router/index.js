@@ -8,6 +8,12 @@ const routes = [{
         component: HomeView
     },
     {
+        path: '/registro',
+        name: 'registro',
+        component: () =>
+            import ('../views/RegistroUsuario')
+    },
+    {
         path: '/gestionModulos',
         name: 'gestionModulos',
         // route level code-splitting
