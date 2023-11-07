@@ -5,7 +5,7 @@
     </div>
     <div class="row p-3">
       <div class="col">
-        <router-link to="/gestionModulos" class="btn btn-primary">Nuevo</router-link>
+        <router-link to="/gestionModulos" class="btn btn-primary" v-if="$store.state.permisos.includes(6)" >Nuevo</router-link>
       </div>
       <div class="col">
         <div class="d-flex justify-content-end">
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table align-middle mx-auto">
+      <table class="table align-middle mx-auto" v-if="$store.state.permisos.includes(7)">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -36,7 +36,7 @@
                   <button class="btn btn-warning mx-1" v-on:click="asd" disabled>Editar</button>
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-danger mx-1" v-on:click="eliminarform(Listaform.idConfigForm)">Eliminar</button>
+                  <button class="btn btn-danger mx-1" v-on:click="eliminarform(Listaform.idConfigForm)" v-if="$store.state.permisos.includes(8)" >Eliminar</button>
                 </div>
               </div>
             </td>

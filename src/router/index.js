@@ -23,6 +23,20 @@ const routes = [{
             import ( /* webpackChunkName: "about" */ '../views/FormBuilderView.vue')
     },
     {
+        path: '/usuarios',
+        name: 'usuarios',
+        component: () =>
+            import ('../views/UsuariosView')
+        //meta: { requiresAuth: true, requiredPermissions: [1, 3, 2, 4, 5] }
+    },
+    {
+        path: '/crearusuario',
+        name: 'crearusuario',
+        component: () =>
+            import ('../views/CrearUsuario'),
+           // meta: { requiresAuth: true, requiredPermissions: [1] }
+    },
+    {
         path: '/modules/:idConfigForm',
         name: 'modules  ',
         component: () =>
@@ -59,4 +73,24 @@ const router = createRouter({
     routes
 })
 
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+      // Asegúrate de que el usuario esté autenticado
+      if (!store.state.isAuthenticated) {
+        return next('/LoginView');
+      }
+      
+      // Verifica los permisos
+      const requiredPermissions = to.meta.requiredPermissions;
+      const userPermissions = store.state.permisos;
+  
+      if (!requiredPermissions.every((permission) => userPermissions.includes(permission))) {
+        // No tienes acceso a esta ruta, muestra un aviso
+        alert('No tienes acceso a este apartado');
+        return next(false); // Evita la navegación
+      }
+    }
+    next();
+  });
+  
 export default router

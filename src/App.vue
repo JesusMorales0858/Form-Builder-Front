@@ -35,6 +35,9 @@
           <li class="nav-item">
             <router-link to="/formularios" class="nav-link">Gestion de modulos</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/usuarios" class="nav-link">Gestion de usuarios</router-link>
+          </li>
           <li v-for="formulario of formularios" :key="formulario.idConfigForm">
             <router-link :to="`/grilla/${formulario.idConfigForm}`" class="nav-link">{{ formulario.titulo
             }}</router-link>
