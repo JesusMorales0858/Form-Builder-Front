@@ -5,7 +5,7 @@
         </div>
         <div class="row p-3">
             <div class="col">
-                <router-link :to="`/modules/${idConfigForm}`" class="btn btn-primary" title="Nuevo">
+                <router-link :to="`/modules/${idConfigForm}`" class="btn btn-primary" title="Nuevo" v-if="$store.state.permisos.includes(9)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-square-fill" viewBox="0 0 16 16">
                         <path
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table align-middle mx-auto">
+            <table class="table align-middle mx-auto" v-if="$store.state.permisos.includes(11)">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -41,7 +41,7 @@
                         <td class="nowrap">
                             <div class="row">
                                 <div class="col-auto"> 
-                                    <button class="btn btn-warning mx-1" title="Editar" @click="mostrarModalEdicion(Datos)">
+                                    <button class="btn btn-warning mx-1" title="Editar" @click="mostrarModalEdicion(Datos)" v-if="$store.state.permisos.includes(10)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <button class="btn btn-danger mx-1" title="Eliminar"
-                                        @click="mostrarConfirmacionEliminar(Datos[0])">
+                                        @click="mostrarConfirmacionEliminar(Datos[0])" v-if="$store.state.permisos.includes(12)">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                             class="bi bi-trash-fill" viewBox="0 0 16 16">
                                             <path

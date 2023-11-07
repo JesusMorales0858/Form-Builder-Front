@@ -45,11 +45,12 @@
       </div>
       <!-- Register buttons -->
       <div class="text-center">
-        <p>No tienes una cuenta? <a href="#!">Registrate</a></p>
+        <p>No tienes una cuenta? <a href="/registro">Registrate</a></p>
       </div>
     </form>
   </div>
 </template>
+
 <script>
 export default {
   name: 'acceso',
@@ -71,7 +72,13 @@ export default {
         .then(response => {
           localStorage.setItem('token', response.data.token);
           this.$store.commit('setAuthenticated', true);
+
           this.$store.commit('setUsuario', response.data.usuario);
+          console.log(response.data.usuario);
+
+          // Establece los permisos en Vuex
+          this.$store.commit('setPermisos', response.data.permisos);
+          
           this.$router.push('/Inicio');
         })
         .catch(response => {
@@ -80,10 +87,9 @@ export default {
       this.loading = false;
     }
   }
-
-}
-
+};
 </script>
+
 <style>
 
 .container {
