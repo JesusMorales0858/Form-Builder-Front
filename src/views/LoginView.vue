@@ -71,6 +71,7 @@ export default {
       await this.axios.post('/api/Autenticacion/validar', payload)
         .then(response => {
           localStorage.setItem('token', response.data.token);
+          
           this.$store.commit('setAuthenticated', true);
 
           this.$store.commit('setUsuario', response.data.usuario);

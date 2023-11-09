@@ -135,7 +135,7 @@
 
 
 <script>
-import Sortable from 'sortablejs'//corregir
+import Sortable from 'sortablejs'
 import { ref } from 'vue';
 import FieldComponent from '../components/FieldComponent.vue'; // Importa el componente
 import axios from 'axios';
@@ -327,17 +327,11 @@ export default {
         }
       })
       .then(response => {
-        this.$refs.staticBackdrop.hide();
+        console.log("guardado con exito");
+        this.$router.push({ name: "formularios" });
       })
       .catch(error => {
-        if (error.response) {
-          console.error('Error de respuesta:', error.response.status);
-        } else if (error.request) {
-          console.error('Error de red: No se recibió respuesta');
-        } else {
-          this.$refs.staticBackdrop.hide();
-          console.error('Error de configuración:', error.message);
-        }
+        console.log("error");
       });
     },
 

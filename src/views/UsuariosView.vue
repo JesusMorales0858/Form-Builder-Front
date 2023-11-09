@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
       <div class="col p-3 ">
         <h6 class="text-center h5">Lista de usuarios</h6>
       </div>

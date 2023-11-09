@@ -1,8 +1,16 @@
 <template>
+  <barra-navegacion></barra-navegacion>
   <div class="background-container">
   </div>
 </template>
-
+<script>
+import BarraNavegacion from '@/components/BarraNavegacion.vue';
+export default{
+  components:{
+        'barra-navegacion': BarraNavegacion,
+    },
+}
+</script>
 <style>
 .background-container {
   /* Establece la imagen de fondo */

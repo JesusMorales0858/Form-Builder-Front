@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import AlertaSuceso from "../components/AlertaSuceso.vue";
 export default {
   name: 'EditarFilaModal',

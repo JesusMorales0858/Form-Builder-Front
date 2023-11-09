@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <barra-navegacion></barra-navegacion>
+  <spinner :visible="MostrarSpinner"></spinner>
+  <div v-if="!MostrarSpinner">
     <form @submit.prevent="obtenerValores">
       <div id="ContenedorDeCampos">
         <div class="form-group">
@@ -24,47 +26,49 @@
       <div class="row">
         <div class="col-auto">
           <div class="col  p-3 text-center">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-success btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+  <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5v-13Z"/>
+  <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5V16Zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V0ZM9 1h2v4H9V1Z"/>
+</svg>
+Guardar</button>
           </div>
         </div>
         <div class="col-auto">
           <div class="col  p-3 text-center">
-            <button type="reset" class="btn btn-primary">Reset</button>
+            <button type="reset" class="btn btn-secondary btn-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+</svg>
+Cancelar</button>
           </div>
         </div>
       </div>
     </form>
-    <!-- Spinner: lo mostramos si loading es true -->
-    <div class="d-flex justify-content-center" v-if="loading">
-      <div class="spinner-border" role="status">
-        <span class="sr-only"></span>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
+import BarraNavegacion from '@/components/BarraNavegacion.vue';  
+import Spinner from '@/components/Spinner.vue';
 export default {
   name: 'ManagerModulesView',
+  components:{
+    'barra-navegacion': BarraNavegacion,
+    'spinner': Spinner
+  },
   data: function () {
-    return { daform: [], dafield: [], loading: false }
+    return { daform: [], dafield: [], MostrarSpinner:false}
   },
   created() {
     this.fetch();
   },
   methods: {
-    fetch() {
-
-      //inicializa el spinner
-      this.loading = true;
-
-
+    async fetch() {
+      this.MostrarSpinner = true;
       const idConfigForm = this.$route.params.idConfigForm;
 
-      axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${idConfigForm}`)
+      await this.axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${idConfigForm}`)
         .then((respuesta) => {
           this.daform = respuesta.data;
           this.dafield = respuesta.data.datosField;
@@ -75,7 +79,7 @@ export default {
         }).finally(() => {
           //finaliza el spinner
           // Ocultamos el spinner luego de finalizar la solicitud
-          this.loading = false;
+         this.MostrarSpinner = false;
         });
     },
     obtenerValores() {
