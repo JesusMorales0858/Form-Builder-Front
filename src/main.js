@@ -8,7 +8,7 @@ import VueAxios from "vue-axios";
 import BootstrapIconsPlugin from 'bootstrap-icons-vue';
 import storage from './storage'
 
-axios.defaults.baseURL = 'http://localhost:5045';
+axios.defaults.baseURL = 'http://apiexcelencia.somee.com';
 
 var token = localStorage.getItem('token');
 if (token) {

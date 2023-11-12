@@ -14,23 +14,28 @@
           </div>
         </div>-->
         <div class="modal-body">
-          <div v-for="campo of dafield" :key="campo.id_Field">
-            <label :for="campo.nombre">{{ campo.etiqueta }}</label>
-            <select v-if="campo.tipo === 'select'" :name="campo.nombre" :class="campo.clase" :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
-              <option v-for="opcion in campo.opciones ? campo.opciones.split(',') : []" :value="opcion.trim()">{{ opcion.trim() }}</option>
-            </select>
-            <input v-else :type="campo.tipo" :placeholder="campo.marcador" :class="campo.clase" :name="campo.nombre" :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
+          <!-- Spinner: lo mostramos si loading es true -->
+          <div class="d-flex justify-content-center" v-if="loading">
+            <div class="spinner-border" role="status">
+              <span class="sr-only"></span>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="cerrarModal">Cerrar</button>
-          <button type="button" class="btn btn-primary" @click="guardarEdicion">Guardar</button>
-        </div>
-        <!-- Spinner: lo mostramos si loading es true -->
-        <div class="d-flex justify-content-center" v-if="loading">
-          <div class="spinner-border" role="status">
-            <span class="sr-only"></span>
-          </div>
+          <div v-if="!loading">
+            <div v-for="campo of dafield" :key="campo.id_Field">
+              <label :for="campo.nombre">{{ campo.etiqueta }}</label>
+              <select v-if="campo.tipo === 'select'" :name="campo.nombre" :class="campo.clase" :required="campo.requerido"
+                v-model="filaEditadaPorNombre[campo.nombre]">
+                <option v-for="opcion in campo.opciones ? campo.opciones.split(',') : []" :value="opcion.trim()">{{
+                  opcion.trim() }}</option>
+              </select>
+              <input v-else :type="campo.tipo" :placeholder="campo.marcador" :class="campo.clase" :name="campo.nombre"
+                :required="campo.requerido" v-model="filaEditadaPorNombre[campo.nombre]">
+            </div>
+            <div class="modalFooter text-center">
+            <button type="button" class="btn btn-outline-danger btn-sm m-1" @click="cerrarModal">Cerrar</button>
+              <button type="button" class="btn btn-outline-success btn-sm m-1" @click="guardarEdicion">Guardar</button>
+            </div> 
+            </div>
         </div>
       </div>
     </div>
@@ -41,7 +46,7 @@
 import AlertaSuceso from "../components/AlertaSuceso.vue";
 export default {
   name: 'EditarFilaModal',
-  components:{
+  components: {
     AlertaSuceso,
   },
   props: {
@@ -66,7 +71,7 @@ export default {
   },
 
   methods: {
-    fetch() {
+    async fetch() {
       // Inicializa el spinner
 
       this.loading = true;
@@ -75,7 +80,7 @@ export default {
       this.id_DeFila = this.fila[0];
 
       // Solicitud que trae los datos para construir el formulario
-      this.axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${this.id_DelFormulario}`)
+      await this.axios.get(`/api/ConfigForm/MostrarFormularioCompleto/${this.id_DelFormulario}`)
         .then((estructuraDelFormulario) => {
           this.dafield = estructuraDelFormulario.data.datosField;
         })
@@ -88,7 +93,7 @@ export default {
         });
 
       // Solicitud que trae los datos de la fila seleccionada
-      this.axios.get(`/api/ConfigForm/ListaRespuestasIdentificadorFila/${this.id_DelFormulario}/${this.id_DeFila}`)
+      await this.axios.get(`/api/ConfigForm/ListaRespuestasIdentificadorFila/${this.id_DelFormulario}/${this.id_DeFila}`)
         .then((DatosFila) => {
           this.datosDeLaFila = DatosFila.data.lista; // Asignar a datosDeLaFila
           this.filaEditadaPorNombre = {};
@@ -108,7 +113,7 @@ export default {
     cerrarModal() {
       this.$emit('cerrar-modal');
     },
-    guardarEdicion() {
+    async guardarEdicion() {
       if (this.datosDeLaFila) {
         const ediciones = [];
         for (const campoNombre in this.filaEditadaPorNombre) {
@@ -121,7 +126,7 @@ export default {
             });
           }
         }
-        this.axios
+        await this.axios
           .post("/api/ConfigForm/Respuestas/Editar", ediciones)
           .then((response) => {
             // Procesar la respuesta del servidor si es necesario
@@ -166,5 +171,9 @@ export default {
   margin-bottom: 10px;
 }
 
-/* ...otros estilos... */
-</style>
+/* Estilos para el pie del formulario (botones) */
+.modalFooter{
+  margin-top: 10px;
+}
+
+/* ...otros estilos... */</style>

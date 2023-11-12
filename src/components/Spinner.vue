@@ -1,5 +1,5 @@
 <template>
-  <div class="spinner-container" v-if="visible">
+  <div class="spinner-containers" v-if="visible">
     <span class="loader"></span>
   </div>
 </template>
@@ -13,7 +13,7 @@ props:{
 </script>
 
 <style scoped>
-.spinner-container {
+.spinner-containers {
   position: fixed;
   top: 0;
   left: 0;
