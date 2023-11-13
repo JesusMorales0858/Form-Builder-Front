@@ -17,7 +17,8 @@
           Nuevo</router-link>
       </div>
     </div>
-    <div class="table-container container-sm"
+    <div class="container-sm">
+    <div class="table-container"
       v-if="$store.state.permisos.includes(7) && !NoHayRegistros && ListaFormularios.length > 0">
       <table class="table align-middle mx-auto">
         <thead>
@@ -62,6 +63,7 @@
         </tbody>
         
       </table>
+      </div>
       <!-- Alerta de confirmación personalizada -->
     <div v-if="mostrarAlertaEliminar" class="alert alert-primary d-flex align-items-center" role="alert">
       <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">

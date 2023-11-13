@@ -25,8 +25,9 @@
 
         <div class="row d-flex justify-content-center">
           <!-- Simple link -->
-          <a href="#!">Olvidaste tu contraseña?</a>
+          <a href="#!" @click="MensajeOlvidoClave()">Olvidaste tu contraseña?</a>
         </div>
+        
       </div>
 
       <!-- Submit button -->
@@ -47,45 +48,70 @@
       <div class="text-center">
         <p>No tienes una cuenta? <a href="/registro">Registrate</a></p>
       </div>
+      <alerta-error :visible = "mostrarAlertaError" :mensaje = "mensajeAlertaError"/>
+      <alerta-informacion :visible = "mostrarAlertaInfo" :mensaje = "mensajeAlertaInfo" />
     </form>
   </div>
 </template>
 
 <script>
+import AlertaError from '@/components/AlertaError.vue';
+import AlertaInformacion from '@/components/AlertaInformacion.vue';
 export default {
   name: 'acceso',
+  components:{
+    'alerta-error': AlertaError,
+    'alerta-informacion': AlertaInformacion
+  },
   data() {
     return {
       usuario: '',
       clave: '',
-      loading: false
+      loading: false,
+      mostrarAlertaError: false,
+      mensajeAlertaError: "",
+      mostrarAlertaInfo: false,
+      mensajeAlertaInfo:""
     }
   },
   methods: {
-    async iniciarSesion() {
+    iniciarSesion() {
       var payload = {
         username: this.usuario,
         password: this.clave
       };
       this.loading = true;
-      await this.axios.post('/api/Autenticacion/validar', payload)
+      this.axios.post('/api/Autenticacion/validar', payload)
         .then(response => {
+
           localStorage.setItem('token', response.data.token);
           
           this.$store.commit('setAuthenticated', true);
 
           this.$store.commit('setUsuario', response.data.usuario);
-          console.log(response.data.usuario);
 
           // Establece los permisos en Vuex
           this.$store.commit('setPermisos', response.data.permisos);
-          
-          this.$router.push('/Inicio');
+
+          this.$store.commit('setRol', response.data.rol);
+
+          window.location.href = '/Inicio';
         })
         .catch(response => {
-          console.log(response.data)
+          this.mensajeAlertaError = "El usuario no existe o es incorrecto";
+          this.mostrarAlertaError = true;
+          setTimeout(() => {
+                     this.mostrarAlertaError = false;
+                    }, 3000);
         });
       this.loading = false;
+    },
+    MensajeOlvidoClave(){
+      this.mostrarAlertaInfo = true;
+      this.mensajeAlertaInfo = "Contacta al administrador"
+      setTimeout(() => {
+                     this.mostrarAlertaInfo = false;
+                    }, 5000);
     }
   }
 };

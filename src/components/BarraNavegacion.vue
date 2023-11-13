@@ -13,16 +13,16 @@
           <div class="col-auto">
             <!--icono user-->
             <button class="navbar-toggler" v-on:click="abrirModalSesion()">
-            <svg v-if="$store.state.isAuthenticated" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-              fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-              <path fill-rule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-            </svg>
+              <svg v-if="$store.state.isAuthenticated" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg>
             </button>
           </div>
-            
-            
+
+
         </div>
       </div>
       <div v-if="!$store.state.isAuthenticated">
@@ -59,8 +59,8 @@
 import InfoSesionModal from '@/components/InfoSesionModal.vue'
 export default {
   name: "BarraNavegacion",
-  components:{
-   'info-sesion': InfoSesionModal,
+  components: {
+    'info-sesion': InfoSesionModal,
   },
   data: function () {
     return {
@@ -74,12 +74,7 @@ export default {
     }
 
   },
-  /*watch:{
-    '$route'(to, from){
-      this.mostarBarraNavegacion = to.name != 'Acceder';
-    }
-  }, */
-  async created() {
+  created() {
     // Verificar si el usuario está autenticado antes de hacer la solicitud a la API
     if (this.mostrarBarraNavegacion) {
 
@@ -99,14 +94,14 @@ export default {
         });
     },
 
-    abrirModalSesion(){
+    abrirModalSesion() {
       this.modalSesion = true;
     },
-    cerrarModalSesion(){
+    cerrarModalSesion() {
       this.modalSesion = false;
     }
   }
-};
+}
 </script>
 <style>
 nav {
@@ -121,6 +116,7 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
 /* Estilo para el overlay que cubre el componente padre */
 .modal-overlay {
   position: fixed;
@@ -128,8 +124,11 @@ nav a.router-link-exact-active {
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
-  z-index: 1040; /* Asegura que el overlay esté detrás del modal */
-  cursor: pointer; /* Cambia el cursor al hacer clic */
+  background: rgba(0, 0, 0, 0.5);
+  /* Fondo oscuro semitransparente */
+  z-index: 1040;
+  /* Asegura que el overlay esté detrás del modal */
+  cursor: pointer;
+  /* Cambia el cursor al hacer clic */
 }
 </style>

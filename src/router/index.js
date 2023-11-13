@@ -1,11 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import storage from '@/storage';
 import HomeView from '../views/HomeView.vue'
 //Importar demas vistas
 
 const routes = [{
         path: '/Inicio',
         name: 'Inicio',
-        component: HomeView
+        component: HomeView,
+        meta: { requiresAuth: true }
     },
     {
         path: '/registro',
@@ -20,51 +22,56 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/FormBuilderView.vue')
+            import ( /* webpackChunkName: "about" */ '../views/FormBuilderView.vue'),
+            meta: { requiresAuth: true }
     },
     {
         path: '/usuarios',
         name: 'usuarios',
         component: () =>
-            import ('../views/UsuariosView')
-        //meta: { requiresAuth: true, requiredPermissions: [1, 3, 2, 4, 5] }
+            import ('../views/UsuariosView'),
+            meta: { requiresAuth: true}
     },
     {
         path: '/crearusuario',
         name: 'crearusuario',
         component: () =>
             import ('../views/CrearUsuario'),
-           // meta: { requiresAuth: true, requiredPermissions: [1] }
+            meta: { requiresAuth: true}
     },
     {
         path: '/modules/:idConfigForm',
         name: 'modules  ',
         component: () =>
-            import ('../views/ManagerModulesView')
+            import ('../views/ManagerModulesView'),
+            meta: { requiresAuth: true },
     },
     {
         path: '/formularios',
         name: 'formularios',
         component: () =>
-            import ('../views/FormulariosView')
+            import ('../views/FormulariosView'),
+            meta: { requiresAuth: true },
     },
     {
         path: '/editForms/:id',
         name: 'editForms',
         component: () =>
-            import ('../views/EditForms')
+            import ('../views/EditForms'),
+            meta: { requiresAuth: true },
     },
     {
         path: '/grilla/:idConfigForm',
         name: 'grilla  ',
         component: () =>
-            import ('../views/ManagerGrillaView')
+            import ('../views/ManagerGrillaView'),
+            meta: { requiresAuth: true },
     },
     {
         path: '/',
         name: 'Acceder',
         component: () =>
-            import ('../views/LoginView')
+            import ('../views/LoginView'),
     }
 ]
 
@@ -74,23 +81,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    // Si la ruta requiere autenticación
     if (to.meta.requiresAuth) {
-      // Asegúrate de que el usuario esté autenticado
-      if (!store.state.isAuthenticated) {
-        return next('/LoginView');
-      }
-      
-      // Verifica los permisos
-      const requiredPermissions = to.meta.requiredPermissions;
-      const userPermissions = store.state.permisos;
-  
-      if (!requiredPermissions.every((permission) => userPermissions.includes(permission))) {
-        // No tienes acceso a esta ruta, muestra un aviso
-        alert('No tienes acceso a este apartado');
-        return next(false); // Evita la navegación
+      // Verifica si el usuario está autenticado
+      if (!storage.state.isAuthenticated) {
+        return next({ name: 'Acceder' }); // Redirige a la página de inicio de sesión
       }
     }
     next();
   });
+  
   
 export default router

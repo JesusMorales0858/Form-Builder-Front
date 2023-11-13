@@ -87,18 +87,18 @@
       return {
         loading: false,
         permisos: [
-          'Crear formularios',
+          'Crear usuarios',
           'Editar usuarios',
-          'Ver formularios creados!',
+          'Ver usuarios',
+          'Editar permisos',
+          'Eliminar usuarios',
+          'Crear formularios',
+          'Ver formularios',
           'Eliminar formularios',
           'Responder formularios',
-          'Crear usuarios',
-          'Ver usuarios',
-          'Editar Respuestas',
-          'Editor permisos de usuarios',
-          'Eliminar Usuarios',
-          'Eliminar Respuestas',
-          'Ver Respuestas'
+          'Editar respuestas',
+          'Ver respuestas',
+          'Eliminar respuestas'
         ],
         permisosSeleccionados: [],
         datosUsuariosCargados: {},
@@ -123,14 +123,12 @@
             const permisosUsuario = respuesta.data.usuario.map((permiso) => permiso.funcionId);
             // Marcar los checkbox según los permisos del usuario
             this.permisosSeleccionados = permisosUsuario;
-            console.log(permisosUsuario)
           }))
           .catch(error => {
             console.log(error)
           });
         await this.axios.get(`/api/Usuarios/ObtenerUsuarioPorID/${this.usuarioId}`)
           .then((respuesta2 => {
-            console.log(respuesta2.data.usuario);
             this.datosUsuariosCargados = respuesta2.data.usuario.username;
           }))
           .catch(error => {
@@ -156,11 +154,9 @@
 
       try {
         // Realiza la solicitud a la API con los datos
-        console.log(data)
         await this.axios.put(`api/Usuarios/editarUsuario/${this.usuarioId}`, data);   
         // Puedes emitir un evento o mostrar una alerta de éxito
         this.$emit('guardar-exito');
-        alert("guardado con exito");
       } catch (error) {
         // Maneja los errores de la solicitud (puedes mostrar una alerta de error)
         console.error(error);

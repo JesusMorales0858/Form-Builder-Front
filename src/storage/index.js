@@ -12,6 +12,7 @@ const storage = createStore({
     isAuthenticated: false,
     usuario: '',
     permisos: [],
+    rol:''
   },
   mutations: {
     setAuthenticated(state, value) {
@@ -22,6 +23,9 @@ const storage = createStore({
     },
     setPermisos(state, permisos) {
       state.permisos = permisos;
+    },
+    setRol(state, rol) {
+      state.rol = rol;
     },
     logout(state) {
       state.isAuthenticated = false;
