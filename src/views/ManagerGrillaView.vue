@@ -253,16 +253,19 @@ export default {
         },
         guardarEdicion() {
             this.mostrarModal = false;
+            this.mensajeAlertaSuceso = "Modificado Correctamente";
+           this.mostrarAlertaSuceso = true;
+          
+                  
+                   this.fetch();
+                   //sacar alerta de suceso despues de los 1000 milisegundos
+                   setTimeout(() => {
+                       this.mostrarAlertaSuceso = false;
+                   }, 3000);
         },
         cerrarModalEdicion() {
             this.mostrarModal = false;
-            this.fetch();
-            this.mostrarAlertaSuceso = true;
-                    this.mensajeAlertaSuceso = "Modificado Correctamente";
-                    //sacar alerta de suceso despues de los 1000 milisegundos
-                    setTimeout(() => {
-                        this.mostrarAlertaSuceso = false;
-                    }, 3000);
+            
         },
         cerrarModal() {
            
