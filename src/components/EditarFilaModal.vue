@@ -130,7 +130,7 @@ export default {
           .post("/api/ConfigForm/Respuestas/Editar", ediciones)
           .then((response) => {
             // Procesar la respuesta del servidor si es necesario
-            this.cerrarModal();
+            this.$emit('edicion-guardada');
           })
           .catch((err) => {
             console.error("Error al guardar las ediciones:", err);

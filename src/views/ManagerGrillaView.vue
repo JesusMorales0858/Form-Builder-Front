@@ -96,7 +96,7 @@
         <!-- Componente modal de edición -->
         <EditarFilaModal v-if="mostrarModal" :fila="filaAEditar" :idConfigForm="filaAEditar.id_ConfigForm"
             :idAnswer="filaAEditar.id_Answer" :idField="filaAEditar.id_Field" @edicion-guardada="guardarEdicion"
-            @cerrar-modal="cerrarModalEdicion" />
+            @cerrar-modal="cerrarModal" />
     </div>
 </template>
 <script>
@@ -252,19 +252,20 @@ export default {
             this.mostrarModal = true;
         },
         guardarEdicion() {
-            // Lógica para guardar la edición en la vista principal
             this.mostrarModal = false;
-        },
-        cerrarModalEdicion() {
-            this.mostrarModal = false;
-            this.fetch();
-            this.mostrarAlertaSuceso = true;
+           
+           
                     this.mensajeAlertaSuceso = "Modificado Correctamente";
+                    this.mostrarAlertaSuceso = true;
+                    this.fetch();
                     //sacar alerta de suceso despues de los 1000 milisegundos
                     setTimeout(() => {
                         this.mostrarAlertaSuceso = false;
                     }, 3000);
-
+        },
+        cerrarModal() {
+           
+            this.mostrarModal = false;
         }
     }
 };
