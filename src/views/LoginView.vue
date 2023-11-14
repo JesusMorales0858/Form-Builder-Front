@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <form @submit.prevent="iniciarSesion()">
+      <div class="display-6 text-center"><p>Acceder</p></div>
       <!-- Usuario input -->
       <div class="form-outline mb-4">
         <input type="text" id="usuario" class="form-control" v-model="usuario" />
@@ -15,14 +16,6 @@
 
       <!-- 2 column grid layout for inline styling -->
       <div class="row mb-4">
-        <div class="col">
-          <!-- Checkbox -->
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-            <label class="form-check-label" for="form2Example31"> Recordar </label>
-          </div>
-        </div>
-
         <div class="row d-flex justify-content-center">
           <!-- Simple link -->
           <a href="#!" @click="MensajeOlvidoClave()">Olvidaste tu contraseña?</a>
@@ -118,7 +111,6 @@ export default {
 </script>
 
 <style>
-
 .container {
   display: flex;
   justify-content: center;

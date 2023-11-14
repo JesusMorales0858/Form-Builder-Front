@@ -231,7 +231,7 @@ export default {
                     //manejo de respuesta del servidor ok
                     this.mostrarAlertaEliminar = false;
                     this.mostrarAlertaSuceso = true;
-                    this.mensajeAlertaSuceso = "Eliminado correctamente";
+                    this.mensajeAlertaSuceso = "Eliminado exitosamente";
                     this.fetch();
                     //sacar alerta de suceso despues de los 2000 milisegundos
                     setTimeout(() => {
@@ -253,11 +253,12 @@ export default {
         },
         guardarEdicion() {
             this.mostrarModal = false;
-           
-           
+        },
+        cerrarModalEdicion() {
+            this.mostrarModal = false;
+            this.fetch();
+            this.mostrarAlertaSuceso = true;
                     this.mensajeAlertaSuceso = "Modificado Correctamente";
-                    this.mostrarAlertaSuceso = true;
-                    this.fetch();
                     //sacar alerta de suceso despues de los 1000 milisegundos
                     setTimeout(() => {
                         this.mostrarAlertaSuceso = false;

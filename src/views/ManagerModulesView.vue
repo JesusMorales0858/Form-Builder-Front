@@ -19,8 +19,20 @@
               <option v-for="opcion in campos.opciones ? campos.opciones.split(',') : []" :value="opcion.trim()">{{
                 opcion.trim() }}</option>
             </select>
-
-            <!-- Si no, renderiza un input según el tipo -->
+            <!-- Si el tipo es text renderiz aun area de texto -->
+            <textarea v-if="campos.tipo === 'textarea'"
+            :name="campos.nombre"
+            :class="campos.clase"
+            :required="campos.requerido"
+            :identificador="campos.id_Field">
+            </textarea>
+            <!-- Si el tipo es checkbox, renderiza una casilla de verificación -->
+            <input type="checkbox" v-if="campos.tipo === 'checkbox'" 
+            :name="campos.nombre"
+            :class="form-check"
+            :required="campos.requerido"
+            :identificador="campos.id_Field">
+            <!-- Si no, renderiza los demas tipos de input -->
             <input v-else :type="campos.tipo" :placeholder="campos.marcador" :class="campos.clase" :name="campos.nombre"
               :required="campos.requerido" :identificador="campos.id_Field">
           </div>
@@ -96,7 +108,7 @@ export default {
       var contenedor = document.getElementById("ContenedorDeCampos");
 
       // Encuentra todos los elementos de formulario dentro del contenedor
-      var campos = contenedor.querySelectorAll("input[type='text'], textarea, input[type='number'], select");
+      var campos = contenedor.querySelectorAll("input[type='text'], textarea, input[type='number'], select, input[type='password'], input[type='email'], input[type='checkbox']");
 
       // Crea un objeto para almacenar los valores
       var valores = [];

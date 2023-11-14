@@ -156,7 +156,7 @@ export default {
       await this.axios.put(`/api/ConfigForm/EliminarModulo/${this.idConfigFormToDelete}`)
         .then(datos => {
           this.mostrarAlertaEliminar = false;
-          this.mensajeAlertaSuceso = "Eliminado correctamente";
+          this.mensajeAlertaSuceso = "Eliminado exitosamente";
           this.mostrarAlertaSuceso = true;
           this.fetch();
 
