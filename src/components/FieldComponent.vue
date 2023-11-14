@@ -19,7 +19,6 @@
       <option v-for="option in field.options" :value="option">{{ option }}</option>
     </select>
     <input v-else-if="field.type === 'checkbox'" type="checkbox" v-model="field.value" class="form-check-input">
-    <input v-else-if="field.type === 'submit' || field.type === 'reset'" :type="field.type" :value="field.label" class="btn btn-primary">
     <!-- Agrega más condiciones para otros tipos de campos -->
   </div>
 </template>

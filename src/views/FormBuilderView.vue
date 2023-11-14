@@ -14,8 +14,6 @@
               <option value="email">Email</option>
               <option value="number">Numero</option>
               <option value="checkbox">Casilla de verificacion</option>
-              <option value="submit">Boton de guardar</option>
-              <option value="reset">Boton de resetear</option>
 
             </select>
           </div>

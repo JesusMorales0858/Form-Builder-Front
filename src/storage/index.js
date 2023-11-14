@@ -34,6 +34,12 @@ const storage = createStore({
       state.permisos = [];
       router.push('/');
     },
+    verificarAutenticacion({ state }) {
+      // Verificar autenticación y redirigir si no está autenticado
+      if (!state.isAuthenticated && router.currentRoute.value.path !== '/') {
+        router.push('/');
+      }
+    },
   },
   actions: {
     cargarPermisos({ commit }) {
