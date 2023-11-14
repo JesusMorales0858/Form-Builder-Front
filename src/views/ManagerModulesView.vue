@@ -20,14 +20,14 @@
                 opcion.trim() }}</option>
             </select>
             <!-- Si el tipo es text renderiz aun area de texto -->
-            <textarea v-if="campos.tipo === 'textarea'"
+            <textarea v-else-if="campos.tipo === 'textarea'"
             :name="campos.nombre"
             :class="campos.clase"
             :required="campos.requerido"
             :identificador="campos.id_Field">
             </textarea>
             <!-- Si el tipo es checkbox, renderiza una casilla de verificación -->
-            <input type="checkbox" v-if="campos.tipo === 'checkbox'" 
+            <input type="checkbox" v-else-if="campos.tipo === 'checkbox'" 
             :name="campos.nombre"
             :class="form-check"
             :required="campos.requerido"
@@ -54,7 +54,7 @@
         </div>
         <div class="col-auto">
           <div class="col  p-3 text-center">
-            <button type="reset" class="btn btn-secondary btn-sm">
+            <button type="reset" class="btn btn-secondary btn-sm" @click="cancelar">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-x-square-fill" viewBox="0 0 16 16">
                 <path
@@ -139,6 +139,10 @@ export default {
         });
 
 
+    },
+    cancelar() {
+      // Retrocede en la historia de navegación
+      this.$router.go(-1);
     }
   }
 };
